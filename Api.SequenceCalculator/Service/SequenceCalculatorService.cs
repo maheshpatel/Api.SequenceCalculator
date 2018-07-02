@@ -15,10 +15,10 @@ namespace Api.SequenceCalculator.Service
         {
             var sequenceNumbers = new SequenceNumbers
             {
-                AllNumbersUptoGivenNumber = _sequenceGenerator.GenerateSequenceFor(number, new AllNumbersUptoAGivenNumberStrategy()),
-                EvenNumbersUptoGivenNumber = _sequenceGenerator.GenerateSequenceFor(number, new EvenNumbersUptoAGivenNumberStrategy()),
-                OddNumbersUptoGivenNumber = _sequenceGenerator.GenerateSequenceFor(number, new OddNumbersUptoAGivenNumberStrategy()),
-                FizzBuzzSequenceNumbersUptoGivenNumber = _sequenceGenerator.GenerateSequenceFor(number, new FizzBuzzSequenceNumberStrategy())
+                AllNumbersUptoGivenNumber = _sequenceGenerator.GenerateSequenceFor(number, SequenceType.AllNumbers),
+                EvenNumbersUptoGivenNumber = _sequenceGenerator.GenerateSequenceFor(number, SequenceType.EvenNumbers),
+                OddNumbersUptoGivenNumber = _sequenceGenerator.GenerateSequenceFor(number, SequenceType.OddNumbers),
+                FizzBuzzSequenceNumbersUptoGivenNumber = _sequenceGenerator.GenerateSequenceFor(number, SequenceType.FizzBuzzNumbers)
             };
 
             return sequenceNumbers;
@@ -28,5 +28,13 @@ namespace Api.SequenceCalculator.Service
     public interface ISequenceCalculatorService
     {
         SequenceNumbers CalculateSequence(int number);
+    }
+
+    public enum SequenceType
+    {
+        AllNumbers,
+        EvenNumbers,
+        OddNumbers,
+        FizzBuzzNumbers
     }
 }

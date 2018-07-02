@@ -31,13 +31,13 @@ namespace Api.SequenceCalculator.Tests.Service
                 FizzBuzzSequenceNumbersUptoGivenNumber = new List<string> { "1", "2", "C", "4", "E" }
             };
 
-            _sequenceGenerator.GenerateSequenceFor(5, Arg.Is<ISequenceGeneratorStrategy>(x => x is EvenNumbersUptoAGivenNumberStrategy)).
+            _sequenceGenerator.GenerateSequenceFor(5, SequenceType.EvenNumbers).
                                     Returns(new List<string> { "2", "4" });
-            _sequenceGenerator.GenerateSequenceFor(5, Arg.Is<ISequenceGeneratorStrategy>(x => x is OddNumbersUptoAGivenNumberStrategy)).
+            _sequenceGenerator.GenerateSequenceFor(5, SequenceType.OddNumbers).
                                     Returns(new List<string> { "1", "3", "5" });
-            _sequenceGenerator.GenerateSequenceFor(5, Arg.Is<ISequenceGeneratorStrategy>(x => x is FizzBuzzSequenceNumberStrategy)).
+            _sequenceGenerator.GenerateSequenceFor(5, SequenceType.FizzBuzzNumbers).
                                     Returns(new List<string> { "1", "2", "C", "4", "E" });
-            _sequenceGenerator.GenerateSequenceFor(5, Arg.Is<ISequenceGeneratorStrategy>(x => x is AllNumbersUptoAGivenNumberStrategy)).
+            _sequenceGenerator.GenerateSequenceFor(5, SequenceType.AllNumbers).
                                     Returns(new List<string> { "1", "2", "3", "4", "5" });
 
             var result =_sequenceCalculatorService.CalculateSequence(5);

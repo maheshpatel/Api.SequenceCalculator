@@ -24,6 +24,23 @@ namespace Api.SequenceCalculator
             builder.RegisterType<SequenceGenerator>().
                As<ISequenceGenerator>().InstancePerRequest();
 
+            builder.RegisterType<AllNumbersUptoAGivenNumberStrategy>().
+                    As<ISequenceGeneratorStrategy>().
+                    Keyed<ISequenceGeneratorStrategy>(SequenceType.AllNumbers);
+
+
+            builder.RegisterType<EvenNumbersUptoAGivenNumberStrategy>().
+                    As<ISequenceGeneratorStrategy>().
+                    Keyed<ISequenceGeneratorStrategy>(SequenceType.EvenNumbers);
+
+            builder.RegisterType<OddNumbersUptoAGivenNumberStrategy>().
+                    As<ISequenceGeneratorStrategy>().
+                    Keyed<ISequenceGeneratorStrategy>(SequenceType.OddNumbers);
+
+            builder.RegisterType<FizzBuzzSequenceNumberStrategy>().
+                    As<ISequenceGeneratorStrategy>().
+                    Keyed<ISequenceGeneratorStrategy>(SequenceType.FizzBuzzNumbers);
+
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 

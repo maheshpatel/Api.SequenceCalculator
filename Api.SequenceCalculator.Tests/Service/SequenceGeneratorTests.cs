@@ -1,4 +1,5 @@
 ﻿using Api.SequenceCalculator.Service;
+using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -9,11 +10,15 @@ namespace Api.SequenceCalculator.Tests.Service
     public class SequenceGeneratorTests
     {
         private SequenceGenerator _sequenceGenerator;
+        private ILifetimeScope _lifetimeScope;
+
+        public ILifetimeScope TestContainer { get; private set; }
 
         [SetUp]
         public void Setup()
         {
-            _sequenceGenerator = new SequenceGenerator();
+            _lifetimeScope = ContainerTest.InitialisedContainer;  
+            _sequenceGenerator = new SequenceGenerator(_lifetimeScope);
         }
 
         [Test]
@@ -24,8 +29,7 @@ namespace Api.SequenceCalculator.Tests.Service
                  "2", "4"
             };
 
-            var evenStrategyObject = new EvenNumbersUptoAGivenNumberStrategy();
-            var result = _sequenceGenerator.GenerateSequenceFor(5, evenStrategyObject);
+            var result = _sequenceGenerator.GenerateSequenceFor(5, SequenceType.EvenNumbers);
 
             result.Should().BeEquivalentTo(expectedResponse);
         }
@@ -38,8 +42,7 @@ namespace Api.SequenceCalculator.Tests.Service
                  "1", "3", "5"
             };
 
-            var oddNumberStrategyObject = new OddNumbersUptoAGivenNumberStrategy();
-            var result = _sequenceGenerator.GenerateSequenceFor(5, oddNumberStrategyObject);
+            var result = _sequenceGenerator.GenerateSequenceFor(5, SequenceType.OddNumbers);
 
             result.Should().BeEquivalentTo(expectedResponse);
         }
@@ -53,8 +56,7 @@ namespace Api.SequenceCalculator.Tests.Service
                 "1", "2", "3", "4", "5"
             };
 
-            var allNumberStrategyObject = new AllNumbersUptoAGivenNumberStrategy();
-            var result = _sequenceGenerator.GenerateSequenceFor(5, allNumberStrategyObject);
+            var result = _sequenceGenerator.GenerateSequenceFor(5, SequenceType.AllNumbers);
 
             result.Should().BeEquivalentTo(expectedResponse);
         }
@@ -68,8 +70,7 @@ namespace Api.SequenceCalculator.Tests.Service
                  "1", "2", "C", "4", "E", "C", "7","8","C", "E", "11","C","13","14","Z","16"
             };
 
-            var fizzBuzzStrategyObject = new FizzBuzzSequenceNumberStrategy();
-            var result = _sequenceGenerator.GenerateSequenceFor(16, fizzBuzzStrategyObject);
+            var result = _sequenceGenerator.GenerateSequenceFor(16, SequenceType.FizzBuzzNumbers);
 
             result.Should().BeEquivalentTo(expectedResponse);
         }
